@@ -23,6 +23,29 @@ class InvoiceSeeder extends Seeder
         $companies = $this->db->table('companies')->get();
         $products = $this->db->table('products')->get();
 
+        $billedCompanyObj = $companies->random();
+        $companyObj =  $companies->random();
+        $company = [
+            'name' => $companyObj->name,
+            'phone' => $companyObj->phone,
+            'email' => $companyObj->email,
+            'address' => [
+                'street' => $companyObj->street,
+                'city' => $companyObj->city,
+                'zipCode' => $companyObj->zip,
+            ]
+        ];
+        $billedCompany = [
+            'name' => $billedCompanyObj->name,
+            'phone' => $billedCompanyObj->phone,
+            'email' => $billedCompanyObj->email,
+            'address' => [
+                'street' => $billedCompanyObj->street,
+                'city' => $billedCompanyObj->city,
+                'zipCode' => $billedCompanyObj->zip,
+            ]
+        ];
+
         $faker = Factory::create();
 
         $invoices = [];
@@ -33,7 +56,8 @@ class InvoiceSeeder extends Seeder
                 'number' => $faker->uuid(),
                 'date' => $faker->date(),
                 'due_date' => $faker->date(),
-                'company_id' => $companies->random()->id,
+                'company' => json_encode($company),
+                'billed_company' => json_encode($billedCompany),
                 'status' => StatusEnum::cases()[array_rand(StatusEnum::cases())],
                 'created_at' => now(),
                 'updated_at' => now(),
