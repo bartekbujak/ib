@@ -35,9 +35,9 @@ class InvoiceTest extends TestCase
                 "address" => [
                     "street" => "Test Address 1",
                     "city" => "New York",
-                    "zipCode" => "1212",
+                    "zipCode" => "12345",
                 ],
-                "phone" => "11",
+                "phone" => "(123) 456-7891",
                 "email" => null,
             ],
             'billedCompany' => [
@@ -45,9 +45,9 @@ class InvoiceTest extends TestCase
                 "address" => [
                     "street" => "Test Address 1",
                     "city" => "New York",
-                    "zipCode" => "1212",
+                    "zipCode" => "12345",
                 ],
-                "phone" => "12",
+                "phone" => "(123) 456-7890",
                 "email" => "noreply@example.com",
             ],
             'status' => StatusEnum::DRAFT->value,
@@ -102,11 +102,11 @@ class InvoiceTest extends TestCase
         $address = new Address(
             'Test Address 1',
             'New York',
-            new ZipCode('1212'),
+            new ZipCode('12345'),
         );
 
-        $company = new Company('From Company', $address, new Phone('11'));
-        $billedCompany = new Company('To Company', $address, new Phone('12'), new Email('noreply@example.com'));
+        $company = new Company('From Company', $address, new Phone('(123) 456-7891'));
+        $billedCompany = new Company('To Company', $address, new Phone('(123) 456-7890'), new Email('noreply@example.com'));
         $product = new Product(Uuid::fromString($productId), 'Product A', new Money(100));
         $invoiceDate = new DateTimeImmutable('2024-05-23');
         $dueDate = new DateTimeImmutable('2024-06-23');

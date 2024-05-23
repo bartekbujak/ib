@@ -6,8 +6,8 @@
 >
     <testsuites>
         <testsuite name="Unit">
-<!--            <directory suffix="Test.php">./test/Unit/Modules/Invoices/Domain/Entity/</directory>-->
             <directory suffix="Test.php">tests/Unit/Modules/Invoices/Domain/Entity/</directory>
+            <directory suffix="Test.php">tests/Unit/Domain/ValueObject/</directory>
         </testsuite>
 
 <!--        <testsuite name="Feature">-->
