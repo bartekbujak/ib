@@ -29,7 +29,7 @@ class CompanyMapper
     }
 
 
-    public static function toArray(Company $company): Company
+    public static function toArray(Company $company): array
     {
         return $company->toArray();
     }

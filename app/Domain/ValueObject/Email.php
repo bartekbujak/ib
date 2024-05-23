@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Domain\ValueObject;
 
-readonly class Email
+class Email
 {
     public function __construct(private string $email)
     {

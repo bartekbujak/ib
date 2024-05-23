@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property string $id UUID
- * @property string $name invoice number
- * @property string $price invoice issuance date
- * @property string $currency invoice due date
+ * @property string $name name
+ * @property string $price price
+ * @property string $currency currency
  */
 class ProductModel extends Model
 {

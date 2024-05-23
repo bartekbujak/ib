@@ -4,17 +4,16 @@ declare(strict_types=1);
 namespace App\Modules\Invoices\Infrastructure\Database\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 /**
  * @property string $id UUID
- * @property string $name invoice number
- * @property string $street invoice issuance date
- * @property string $city invoice due date
+ * @property string $name name
+ * @property string $street street
+ * @property string $city city
  * @property string $zip
- * @property string $phone invoice billed company
- * @property string $email status of invoice approval
+ * @property string $phone phone
+ * @property string $email email
  */
 class CompanyModel extends Model
 {
