@@ -19,4 +19,9 @@ class Money
     {
         return new Money($this->value * $multiplier, $this->currency);
     }
+
+    public function add(Money $money): Money
+    {
+        return new Money(($this->value + $money->value), $this->currency);
+    }
 }

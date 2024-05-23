@@ -27,7 +27,7 @@ class ProductLine implements EntityInterface
         ];
     }
 
-    private function calculateTotal(): Money
+    public function calculateTotal(): Money
     {
         return $this->product->price()->multiply($this->quantity);
     }

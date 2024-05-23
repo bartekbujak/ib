@@ -76,6 +76,7 @@ class Invoice implements AggregateRootInterface
             'billedCompany' => $this->billedCompany->toArray(),
             'status' => $this->status->value,
             'lines' => $lines,
+            'total' => (string) $this->productLineCollection->getTotalPrice(),
         ];
     }
 }

@@ -15,7 +15,8 @@ class InvoiceDTO
         public array $company,
         public array $billedCompany,
         public string $status,
-        public array $productLines
+        public array $productLines,
+        public string $total,
     ) {}
 
     public static function fromEntity(Invoice $invoice): self
@@ -31,6 +32,7 @@ class InvoiceDTO
             $rawInvoice['billedCompany'],
             $rawInvoice['status'],
             $rawInvoice['lines'],
+            $rawInvoice['total'],
         );
     }
 }

@@ -59,6 +59,7 @@ class InvoiceTest extends TestCase
                     'total' => '10 usd',
                 ],
             ],
+            'total' => '10 usd',
         ];
 
         $this->assertSame($expectedArray, $invoice->toArray());
