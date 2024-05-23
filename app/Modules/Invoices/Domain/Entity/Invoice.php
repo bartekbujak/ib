@@ -5,8 +5,9 @@ namespace App\Modules\Invoices\Domain\Entity;
 
 use App\Domain\AggregateRootInterface;
 use App\Domain\Enums\StatusEnum;
+use App\Modules\Approval\Api\ApprovalFacadeInterface;
+use App\Modules\Approval\Api\Dto\ApprovalDto;
 use App\Modules\Invoices\Domain\Collection\ProductLineCollection;
-use App\Modules\Invoices\Domain\ValueObject\Company;
 use DateTimeImmutable;
 use Ramsey\Uuid\UuidInterface;
 
@@ -19,8 +20,8 @@ class Invoice implements AggregateRootInterface
         private string $invoiceNumber,
         private DateTimeImmutable $invoiceDate,
         private DateTimeImmutable $dueDate,
-        private readonly Company $company,
-        private readonly Company $billedCompany,
+        private Company $company,
+        private Company $billedCompany,
         private StatusEnum $status = StatusEnum::DRAFT,
     ) {
         $this->productLineCollection = new ProductLineCollection();
@@ -32,19 +33,25 @@ class Invoice implements AggregateRootInterface
         $this->productLineCollection->addProductLine($productLine);
     }
 
-    public function approve(): void
+    public function approve(ApprovalFacadeInterface $facade): void
     {
-        if ($this->status !== StatusEnum::DRAFT) {
-            throw new \LogicException('Cannot approve invoice');
-        }
+        $dto = new ApprovalDto(
+            $this->id,
+            $this->status,
+            Invoice::class,
+        );
+        $facade->approve($dto);
         $this->status = StatusEnum::APPROVED;
     }
 
-    public function reject(): void
+    public function reject(ApprovalFacadeInterface $facade): void
     {
-        if ($this->status !== StatusEnum::DRAFT) {
-            throw new \LogicException('Cannot reject invoice');
-        }
+        $dto = new ApprovalDto(
+            $this->id,
+            $this->status,
+            Invoice::class,
+        );
+        $facade->reject($dto);
         $this->status = StatusEnum::REJECTED;
     }
 

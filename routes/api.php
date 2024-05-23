@@ -21,6 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('invoice')->group(function () {
     Route::get('{id}', [InvoiceController::class, 'show']);
-    Route::put('{id}/approve', [InvoiceController::class, 'approve']);
-    Route::put('{id}/reject', [InvoiceController::class, 'reject']);
+    Route::get('{id}/approve', [InvoiceController::class, 'approve']);
+    Route::get('{id}/reject', [InvoiceController::class, 'reject']);
 });

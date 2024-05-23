@@ -6,6 +6,7 @@ namespace App\Modules\Invoices\Infrastructure\Database\Model;
 
 use App\Modules\Invoices\Domain\Entity\Invoice;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property string $id UUID
@@ -17,6 +18,9 @@ use Illuminate\Database\Eloquent\Model;
 class InvoiceLineModel extends Model
 {
     protected $table = 'invoice_product_lines';
+    protected $keyType = 'string';
+
+    public $incrementing = false;
 
     protected $fillable = [
         'invoice_id',
@@ -25,8 +29,13 @@ class InvoiceLineModel extends Model
         'price',
     ];
 
-    public function invoice()
+    public function invoice(): BelongsTo
     {
-        return $this->belongsTo(Invoice::class);
+        return $this->belongsTo(InvoiceModel::class, 'invoice_id');
+    }
+
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(ProductModel::class, 'product_id');
     }
 }

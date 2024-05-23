@@ -14,10 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->dropForeign(['company_id']);
-            $table->dropColumn('company_id');
-            $table->json('company');
-            $table->json('billed_company');
+            $table->uuid('billed_company_id');
+            $table->foreign('billed_company_id')->references('id')->on('companies');
         });
     }
 
@@ -29,10 +27,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->uuid('company_id')->after('id')->nullable();
-            $table->foreign('company_id')->references('id')->on('companies');
-            $table->dropColumn('company');
-            $table->dropColumn('billed_company');
+            $table->dropForeign(['billed_company_id']);
+            $table->dropColumn('billed_company_id');
         });
     }
 };

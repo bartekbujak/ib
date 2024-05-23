@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Modules\Invoices\Infrastructure\Database\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
@@ -27,5 +28,15 @@ class InvoiceModel extends Model
     public function invoiceLines(): HasMany
     {
         return $this->hasMany(InvoiceLineModel::class, 'invoice_id');
+    }
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(CompanyModel::class, 'company_id');
+    }
+
+    public function billedCompany(): BelongsTo
+    {
+        return $this->belongsTo(CompanyModel::class, 'billed_company_id');
     }
 }

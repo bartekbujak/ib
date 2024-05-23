@@ -5,40 +5,47 @@ namespace App\Modules\Invoices\Infrastructure\Http;
 
 use App\Infrastructure\Controller;
 use App\Modules\Invoices\Api\InvoiceFacadeInterface;
+use App\Modules\Invoices\Domain\Exception\InvoiceNotExistException;
 use Ramsey\Uuid\Uuid;
 
 class InvoiceController extends Controller
 {
-    public function __construct(private readonly InvoiceFacadeInterface $invoiceFacade) {}
+    public function __construct(private InvoiceFacadeInterface $invoiceFacade) {}
 
     public function show($id)
     {
-        $uuid = Uuid::fromString($id);
-        $invoice = $this->invoiceFacade->find($uuid);
 
-        return response()->json($invoice);
+        try {
+            $uuid = Uuid::fromString($id);
+            $invoice = $this->invoiceFacade->find($uuid);
+            return response()->json($invoice);
+        } catch (InvoiceNotExistException) {
+            return response()->json(['message' => 'InvoiceModel does not exist'], 404);
+        }
     }
 
     public function approve($id)
     {
-        $invoice = Invoice::findOrFail($id);
+        try {
+            $this->invoiceFacade->approve(Uuid::fromString($id));
 
-        if ($this->approvalService->isApprovable($invoice)) {
-            $this->approvalService->approve($invoice);
             return response()->json(['message' => 'InvoiceModel approved successfully']);
-        } else {
+        } catch (InvoiceNotExistException) {
+           return response()->json(['message' => 'InvoiceModel does not exist'], 404);
+        } catch (\Exception) {
             return response()->json(['message' => 'InvoiceModel cannot be approved'], 400);
         }
     }
 
     public function reject($id)
     {
-        $invoice = Invoice::findOrFail($id);
+        try {
+            $this->invoiceFacade->reject(Uuid::fromString($id));
 
-        if ($this->approvalService->isRejectable($invoice)) {
-            $this->approvalService->reject($invoice);
             return response()->json(['message' => 'InvoiceModel rejected successfully']);
-        } else {
+        } catch (InvoiceNotExistException) {
+            return response()->json(['message' => 'InvoiceModel does not exist'], 404);
+        } catch (\Exception $e) {
             return response()->json(['message' => 'InvoiceModel cannot be rejected'], 400);
         }
     }

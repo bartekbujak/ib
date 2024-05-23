@@ -28,3 +28,4 @@ class InvoiceServiceProvider extends ServiceProvider implements DeferrableProvid
         ];
     }
 }
+

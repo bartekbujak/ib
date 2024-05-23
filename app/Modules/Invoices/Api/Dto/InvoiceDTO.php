@@ -5,7 +5,7 @@ namespace App\Modules\Invoices\Api\Dto;
 
 use App\Modules\Invoices\Domain\Entity\Invoice;
 
-readonly class InvoiceDTO
+class InvoiceDTO
 {
     public function __construct(
         public string $id,
@@ -33,5 +33,4 @@ readonly class InvoiceDTO
             $rawInvoice['lines'],
         );
     }
-
 }

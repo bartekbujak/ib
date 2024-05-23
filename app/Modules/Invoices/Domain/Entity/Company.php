@@ -1,13 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Invoices\Domain\ValueObject;
+namespace App\Modules\Invoices\Domain\Entity;
 
+use App\Domain\EntityInterface;
 use App\Domain\ValueObject\Address;
 use App\Domain\ValueObject\Email;
 use App\Domain\ValueObject\Phone;
 
-class Company
+class Company implements EntityInterface
 {
     public function __construct(
         private string $name,

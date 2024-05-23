@@ -7,23 +7,24 @@ use App\Domain\ValueObject\Address;
 use App\Domain\ValueObject\Email;
 use App\Domain\ValueObject\Phone;
 use App\Domain\ValueObject\ZipCode;
-use App\Modules\Invoices\Domain\ValueObject\Company;
+use App\Modules\Invoices\Domain\Entity\Company;
+use App\Modules\Invoices\Infrastructure\Database\Model\CompanyModel;
 
 class CompanyMapper
 {
-    public static function fromArray(array $companyRaw): Company
+    public static function fromModel(CompanyModel $model): Company
     {
         $address = new Address(
-            $companyRaw['address']['street'],
-            $companyRaw['address']['city'],
-            new ZipCode($companyRaw['address']['zipCode']),
+            $model->street,
+            $model->city,
+            new ZipCode($model->zip),
         );
 
         return new Company(
-            $companyRaw['name'],
+            $model->name,
             $address,
-            new Phone($companyRaw['phone']),
-            $companyRaw['email'] ? new Email($companyRaw['email']) : null,
+            new Phone($model->phone),
+            $model->email ? new Email($model->email) : null,
         );
     }
 
